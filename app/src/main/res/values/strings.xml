@@ -1,8 +1,14 @@
 <resources>
-    <string name="app_name">TamircimCebimdeDemo</string>
+    <string name="app_name">Tamircim Cebimde (Demo)</string>
+    <string name="login_label">GİRİŞ</string>
+    <string name="register_label">YENİ KAYIT</string>
     <string name="login_button">GİRİŞ YAP</string>
     <string name="register_button">KAYIT OL</string>
     <string name="register_link">Üye değilseniz hesap oluşturun!</string>
     <string name="main_activity_label">Tamircim Cebimde (Demo)</string>
     <string name="main_activity_in_label">Tamircim\nCebimde\n(Demo)</string>
+    <string name="hello_home_fragment">Hello Fragment Home</string>
+    <string name="hello_posts_fragment">Hello Fragment My Posts</string>
+    <string name="hello_account_fragment">Hello Fragment My Account</string>
+    <string name="hello_messages_fragment">Hello Fragment My Messages</string>
 </resources>

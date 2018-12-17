@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "775348352456",
+    "firebase_url": "https://tamircimcebimdedemo.firebaseio.com",
+    "project_id": "tamircimcebimdedemo",
+    "storage_bucket": "tamircimcebimdedemo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775348352456:android:b3d7d7bc26fbb4bc",
+        "android_client_info": {
+          "package_name": "com.tamirdunyasi.tamircimcebimdedemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775348352456-ob643f04pjglusr4pmngf6775p49rh0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSed0j9RDjPIYwZGdYuWSFkFd3PA9xb8Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

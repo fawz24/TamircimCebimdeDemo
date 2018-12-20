@@ -4,23 +4,23 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Home" />
+        android:title="Anasayfa" />
 
     <item
         android:id="@+id/nav_posts"
         android:icon="@drawable/ic_posts_black_24dp"
-        android:title="My Posts" />
+        android:title="Taleplerim" />
 
     <item android:id="@+id/nav_services"
         android:icon="@drawable/ic_cloud_done_black_24dp"
-        android:title="My Services"/>
+        android:title="Hizmetlerim"/>
 
     <item android:id="@+id/nav_messages"
         android:icon="@drawable/ic_message_black_24dp"
-        android:title="Messages"/>
+        android:title="Mesajlarım"/>
 
     <item
         android:id="@+id/nav_account"
         android:icon="@drawable/ic_account_black_24dp"
-        android:title="My Account" />
+        android:title="Hesabım" />
 </menu>

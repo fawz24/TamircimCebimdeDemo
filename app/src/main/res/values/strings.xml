@@ -11,4 +11,6 @@
     <string name="hello_posts_fragment">Hello Fragment My Posts</string>
     <string name="hello_account_fragment">Hello Fragment My Account</string>
     <string name="hello_messages_fragment">Hello Fragment My Messages</string>
+    <string name="hello_company_register_fragment">Fragment Company Registration</string>
+    <string name="hello_personal_register_fragment">Fragment Personal Registration</string>
 </resources>

@@ -170,14 +170,14 @@ public class HomeActivity extends AppCompatActivity {
                         TextView peer = new TextView(context);
                         peer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
                         peer.setTextSize(dpToPx(8));//convertDpToPx(context, 20)
-                        peer.setText(document.getString("category"));
+                        peer.setText(document.getString("title"));
                         peer.setGravity(Gravity.CENTER);
 
 //                        Create text view for post
                         TextView firmaadi = new TextView(context);
                         firmaadi.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
                         firmaadi.setTextSize(dpToPx(6));//convertDpToPx(context, 15)
-                        firmaadi.setText(document.getString("category"));
+                        firmaadi.setText(document.getString("title"));
                         firmaadi.setGravity(Gravity.CENTER);
 
 //                        Create view for divider
@@ -192,29 +192,7 @@ public class HomeActivity extends AppCompatActivity {
                         contents.setOrientation(LinearLayout.VERTICAL);
                         contents.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                        List<QueryDocumentSnapshot> list = new ArrayList<>();
 
-
-                        for (Map<String, Object> ctnt: (List<Map<String, Object>>)document.get("contents")) {
-//                        for (Map<String, Object> ctnt: (List<Map<String, Object>>)document.get("contents")) {
-//                              Create text view for content
-                            TextView content = new TextView(context);
-                            params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            params.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
-                            content.setLayoutParams(params);
-                            content.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
-                            content.setText(ctnt.get("body").toString());
-//                            content.setGravity(Gravity.CENTER);
-
-//                            Create a divider
-                            View div = new View(context);
-                            div.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1)));//(int)convertDpToPx(context, 1)
-                            div.setBackgroundColor(getResources().getColor(R.color.colorLightGray));
-
-//                            Attach the new content and divider to the contents linear layout
-                            contents.addView(content);
-                            contents.addView(div);
-                        }
 
 //                        Create the relative layout
                         RelativeLayout relativeLayout = new RelativeLayout(context);

@@ -27,6 +27,7 @@ import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -146,11 +147,12 @@ public class HomeActivity extends AppCompatActivity {
     private void fillData(final Context context){
         db.collection("company").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    int i = 0;
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                    final int i = 0;
+                    for (final QueryDocumentSnapshot document : task.getResult()) {
 //                        Log.d("content", document.getId() + " => " + document.getData());
+
 //                        Create and fill the card
                         CardView card = new CardView(context);
                         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -167,17 +169,17 @@ public class HomeActivity extends AppCompatActivity {
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
 //                        Create text view for peer
-                        TextView peer = new TextView(context);
+                        final TextView peer = new TextView(context);
                         peer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
                         peer.setTextSize(dpToPx(8));//convertDpToPx(context, 20)
                         peer.setText(document.getString("title"));
                         peer.setGravity(Gravity.CENTER);
 
 //                        Create text view for post
-                        TextView firmaadi = new TextView(context);
+                        final TextView firmaadi = new TextView(context);
                         firmaadi.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
                         firmaadi.setTextSize(dpToPx(6));//convertDpToPx(context, 15)
-                        firmaadi.setText(document.getString("title"));
+//                        firmaadi.setText(document.getString("title"));
                         firmaadi.setGravity(Gravity.CENTER);
 
 //                        Create view for divider
@@ -191,7 +193,6 @@ public class HomeActivity extends AppCompatActivity {
                         contents.setMinimumHeight(dpToPx(60));//(int)convertDpToPx(context, 60)
                         contents.setOrientation(LinearLayout.VERTICAL);
                         contents.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
 
 
 //                        Create the relative layout
@@ -233,11 +234,30 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         });
 
+//                        Get company title
+                        db.collection("users").document(document.getId()).get().addOnCompleteListener(HomeActivity.this, new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        setCompanyTitle(firmaadi, document.get("name").toString());
+//                                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                        Toast.makeText(context, "Firma adı alındı", Toast.LENGTH_LONG).show();
+                                    } else {
+//                                                Log.d(TAG, "No such document");
+                                    }
+                                } else {
+//                                            Log.d(TAG, "get failed with ", task.getException());
+                                }
+                            }
+                        });
+
 //                        Add card to container
                         hContainer.addView(card);
 
-                        Toast.makeText(context, "Data got: " + document.getData()/*.get("content").toString()*/, Toast.LENGTH_LONG).show();
-                        i += 1;
+//                        Toast.makeText(context, "Data got: " + document.getData()/*.get("content").toString()*/, Toast.LENGTH_LONG).show();
+//                        i += 1;
                     }
                 } else {
                     Log.w("content", "Error getting documents.", task.getException());
@@ -249,5 +269,9 @@ public class HomeActivity extends AppCompatActivity {
     public int dpToPx(int dp) {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+    public void setCompanyTitle(TextView textView, String title) {
+        textView.setText(title);
     }
 }

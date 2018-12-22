@@ -1,6 +1,7 @@
 package com.tamirdunyasi.tamircimcebimdedemo;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,13 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class HomeActivity extends AppCompatActivity {
 
     private FragmentsStatePagerAdapter mFragmentsPagerAdapter;
-    private ViewPager mViewPager;
+//    private ViewPager mViewPager;
     private BottomNavigationView mBottomNavigationView;
     private TabLayout tabLayout;
     private Menu mBottomMenu;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +40,14 @@ public class HomeActivity extends AppCompatActivity {
 
         mFragmentsPagerAdapter = new FragmentsStatePagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager)findViewById(R.id.container);
-        setUpViewPager(mViewPager);
-        mViewPager.addOnPageChangeListener(pageChangeListener);
+//        mViewPager = (ViewPager)findViewById(R.id.container);
+//        setUpViewPager(mViewPager);
+//        mViewPager.addOnPageChangeListener(pageChangeListener);
 
-        mBottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation_bottom);
-        mBottomMenu = mBottomNavigationView.getMenu();
+        mBottomNavigationView = findViewById(R.id.navigation_bottom);
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
+
+        mBottomMenu = mBottomNavigationView.getMenu();
     }
 
     private void setUpViewPager(ViewPager viewPager) {
@@ -52,40 +58,43 @@ public class HomeActivity extends AppCompatActivity {
         viewPager.setAdapter(mFragmentsPagerAdapter);
     }
 
-    private  ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int i, float v, int i1) {
-
-        }
-
-        @Override
-        public void onPageSelected(int i) {
-            setCheckBottomMenuItem(i);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int i) {
-
-        }
-    };
+//    private  ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+//        @Override
+//        public void onPageScrolled(int i, float v, int i1) {
+//
+//        }
+//
+//        @Override
+//        public void onPageSelected(int i) {
+//            setCheckBottomMenuItem(i);
+//        }
+//
+//        @Override
+//        public void onPageScrollStateChanged(int i) {
+//
+//        }
+//    };
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Intent intent;
             switch (menuItem.getItemId()){
-                case R.id.nav_home:
-                    mViewPager.setCurrentItem(0);
-                    break;
                 case R.id.nav_posts:
-                    mViewPager.setCurrentItem(1);
+                    intent = new Intent(HomeActivity.this, PostsActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.nav_messages:
-                    mViewPager.setCurrentItem(2);
+                    intent = new Intent(HomeActivity.this, MessagesActivity.class);
+                    startActivity(intent);
+//                    mViewPager.setCurrentItem(2);
                     break;
                 case R.id.nav_account:
-                    mViewPager.setCurrentItem(3);
+                    intent = new Intent(HomeActivity.this, AccountActivity.class);
+                    startActivity(intent);
 //                    mBottomMenu.clear();
 //                    mBottomNavigationView.inflateMenu(R.menu.navigation_company_menu);
+//                    mBottomMenu = mBottomNavigationView.getMenu();
                     break;
             }
             return true;

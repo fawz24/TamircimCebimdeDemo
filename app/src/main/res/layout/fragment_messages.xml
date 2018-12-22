@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MessagesFragment">
+    tools:context=".MessagesFragment"
+    android:id="@+id/messageScrollView" >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout android:id="@+id/messageContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_messages_fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <!--<android.support.v7.widget.CardView-->
+            <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/card_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="10dp"-->
+            <!--card_view:contentPadding="10dp"-->
+            <!--card_view:cardCornerRadius="4dp"-->
+            <!--card_view:cardMaxElevation="5dp">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView android:id="@+id/messagePeer"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:textSize="20dp"-->
+                    <!--android:text="Firma adi"-->
+                    <!--android:gravity="center_vertical" />-->
+
+                <!--<TextView android:id="@+id/messagePost"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:textSize="15dp"-->
+                    <!--android:text="Talep"-->
+                    <!--android:gravity="center_vertical" />-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="@android:color/darker_gray" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:minHeight="60dp" >-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Test"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:layout_marginBottom="5dp"-->
+                        <!--android:textSize="15dp" />-->
+
+                    <!--<View-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1dp"-->
+                        <!--android:background="@color/colorLightGray" />-->
+
+                    <!--<RelativeLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
+
+                        <!--<TextView android:id="@+id/newMessage"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginTop="5dp"-->
+                            <!--android:layout_marginBottom="5dp"-->
+                            <!--android:textSize="15dp"-->
+                            <!--android:text="Yeni Mesaj"-->
+                            <!--android:textColor="@color/colorSecond"-->
+                            <!--android:layout_alignParentRight="true" />-->
+                    <!--</RelativeLayout>-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
+    </LinearLayout>
+</ScrollView>

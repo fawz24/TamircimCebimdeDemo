@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <RelativeLayout android:id="@+id/relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout android:id="@+id/relativeTop"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_alignParentTop="true">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <android.support.design.widget.TabLayout android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="4dp"
+                    android:background="@drawable/primary_gray_border_bottom">
+
+                </android.support.design.widget.TabLayout>
+                <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/home_toolbar_top"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="?attr/actionBarSize"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:minHeight="?attr/actionBarSize"-->
+                <!--android:theme="?attr/actionBarTheme"-->
+                <!--android:elevation="4dp"-->
+                <!--app:layout_editor_absoluteX="0dp"-->
+                <!--app:layout_editor_absoluteY="0dp">-->
+
+                <!--</android.support.v7.widget.Toolbar>-->
+            </android.support.design.widget.AppBarLayout>
+        </RelativeLayout>
+
+        <RelativeLayout android:id="@+id/relativeMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativeTop"
+        android:layout_above="@id/relativeBottom">
+
+        <!--<android.support.v4.view.ViewPager android:id="@+id/container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--</android.support.v4.view.ViewPager>-->
+
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MessagesActivity"
+                android:id="@+id/messageScrollView" >
+
+                <LinearLayout android:id="@+id/messageContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <!--<android.support.v7.widget.CardView-->
+                    <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+                    <!--android:id="@+id/card_view"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--card_view:contentPadding="10dp"-->
+                    <!--card_view:cardCornerRadius="4dp"-->
+                        <!--card_view:cardMaxElevation="5dp">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<TextView android:id="@+id/messagePeer"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:textSize="20dp"-->
+                    <!--android:text="Firma adi"-->
+                    <!--android:gravity="center_vertical" />-->
+
+                    <!--<TextView android:id="@+id/messagePost"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:textSize="15dp"-->
+                    <!--android:text="Talep"-->
+                    <!--android:gravity="center_vertical" />-->
+
+                    <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="@android:color/darker_gray" />-->
+
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:minHeight="60dp" >-->
+
+                    <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Test"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:textSize="15dp" />-->
+
+                    <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="@color/colorLightGray" />-->
+
+                    <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+
+                    <!--<TextView android:id="@+id/newMessage"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:textSize="15dp"-->
+                    <!--android:text="Yeni Mesaj"-->
+                    <!--android:textColor="@color/colorSecond"-->
+                    <!--android:layout_alignParentRight="true" />-->
+                    <!--</RelativeLayout>-->
+                    <!--</LinearLayout>-->
+                    <!--</LinearLayout>-->
+                    <!--</android.support.v7.widget.CardView>-->
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+        <RelativeLayout android:id="@+id/relativeBottom"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_alignParentBottom="true">
+
+            <android.support.design.widget.BottomNavigationView android:id="@+id/navigation_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/white_gray_border_top"
+                app:menu="@menu/navigation_menu">
+
+            </android.support.design.widget.BottomNavigationView>
+
+            <!--<android.support.design.widget.AppBarLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:layout_gravity="bottom">-->
+            <!---->
+            <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/home_toolbar_bottom"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="@drawable/white_gray_border_top"-->
+            <!--android:elevation="4dp"-->
+            <!--android:minHeight="?attr/actionBarSize"-->
+            <!--android:theme="?attr/actionBarTheme"-->
+            <!--app:layout_editor_absoluteX="0dp"-->
+            <!--app:layout_editor_absoluteY="0dp">-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/icon_home"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--app:srcCompat="@drawable/ic_home_black_24dp" />-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/icon_posts"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--app:srcCompat="@drawable/ic_posts_black_24dp" />-->
+
+            <!--<RelativeLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/icon_account"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_weight="1"-->
+            <!--app:srcCompat="@drawable/ic_account_black_24dp" />-->
+            <!--</RelativeLayout>-->
+            <!--</LinearLayout>-->
+            <!--</android.support.v7.widget.Toolbar>-->
+            <!--</android.support.design.widget.AppBarLayout>-->
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--<android.support.design.widget.TabLayout android:id="@+id/tab"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_width="match_parent">-->
+
+    <!--</android.support.design.widget.TabLayout>-->
+</android.support.design.widget.CoordinatorLayout>

@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PersonalRegisterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_personal_register_fragment" />
+        android:layout_height="wrap_content"
+        android:padding="25dp">
 
-</FrameLayout>
+        <EditText android:id="@+id/registerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ad"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText android:id="@+id/registerSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Soyad"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerName"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText android:id="@+id/registerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerSurname"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText android:id="@+id/registerPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Şifre"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerEmail"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:inputType="textPassword" />
+
+        <EditText android:id="@+id/registerPasswordRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Şifreyi Tekrarla"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerPassword"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/registerPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerPasswordRepeat"
+            android:hint="Phone"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText
+            android:id="@+id/registerAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerPhone"
+            android:hint="Address"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <Button android:id="@+id/registerButtonPersonal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registerAddress"
+            android:text="@string/register_button"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorSecond" />
+    </RelativeLayout>
+</RelativeLayout>

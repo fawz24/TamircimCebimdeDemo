@@ -1,14 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CompanyRegisterFragment">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".CompanyRegisterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_company_register_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="25dp">
 
-</FrameLayout>
+        <EditText android:id="@+id/registerNameCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ad"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText android:id="@+id/registerTitleCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ünvan"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerNameCompany"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText
+            android:id="@+id/registerSicilNoCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerTitleCompany"
+            android:hint="Sicil No"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText
+            android:id="@+id/registerVergiDairesiCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerSicilNoCompany"
+            android:hint="Vergi Dairesi"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText
+            android:id="@+id/registerVergiDairesiNoCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerVergiDairesiCompany"
+            android:hint="Vergi Daresi No"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText android:id="@+id/registerEmailCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_centerHorizontal="true"
+            android:inputType="textEmailAddress"
+            android:layout_below="@id/registerVergiDairesiNoCompany"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText android:id="@+id/registerPasswordCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Şifre"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerEmailCompany"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:inputType="textPassword" />
+
+        <EditText android:id="@+id/registerPasswordRepeatCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Şifreyi Tekrarla"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerPasswordCompany"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/registerPhoneCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerPasswordRepeatCompany"
+            android:hint="Phone"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <EditText
+            android:id="@+id/registerAddressCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/registerPhoneCompany"
+            android:hint="Address"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" />
+
+        <Button android:id="@+id/registerButtonPersonalCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registerAddressCompany"
+            android:text="@string/register_button"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorSecond" />
+    </RelativeLayout>
+</ScrollView>

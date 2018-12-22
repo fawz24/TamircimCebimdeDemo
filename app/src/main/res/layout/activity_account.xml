@@ -39,7 +39,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Account"/>
+                android:text="Account"
+                android:onClick="logoutListener" />
         </RelativeLayout>
 
         <RelativeLayout android:id="@+id/relativeBottom"

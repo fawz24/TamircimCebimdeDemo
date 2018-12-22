@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -34,6 +36,12 @@ import java.util.Map;
 public class MessagesActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth dbAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser;
+
+    private String currentUserEmail;
+    private String currentUserDisplayName;
+    private String currentUserId;
 
     private LinearLayout mContainer;
     private BottomNavigationView mBottomNavigationView;
@@ -44,6 +52,13 @@ public class MessagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
 
+        currentUser = dbAuth.getCurrentUser();
+
+        Bundle bundle = getIntent().getExtras();
+        currentUserId = bundle.getString("userId");
+        currentUserEmail = bundle.getString("userEmail");
+        currentUserDisplayName = bundle.getString("userName");
+
         mBottomNavigationView = findViewById(R.id.navigation_bottom);
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
 
@@ -53,6 +68,9 @@ public class MessagesActivity extends AppCompatActivity {
         mContainer = findViewById(R.id.messageContainer);
 
         fillData(this);
+
+//        Toast.makeText(this, "User Id: " + currentUserId, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "User Id: " + currentUser.getUid(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -65,27 +83,32 @@ public class MessagesActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Intent intent;
+            Intent intent = null;
             switch (menuItem.getItemId()){
                 case R.id.nav_home:
                     intent = new Intent(MessagesActivity.this, HomeActivity.class);
-                    startActivity(intent);
                     break;
                 case R.id.nav_posts:
                     intent = new Intent(MessagesActivity.this, PostsActivity.class);
-                    startActivity(intent);
                     break;
                 case R.id.nav_account:
                     intent = new Intent(MessagesActivity.this, AccountActivity.class);
-                    startActivity(intent);
                     break;
+            }
+            if (intent != null){
+                Bundle bundle = new Bundle();
+                bundle.putString("userEmail", currentUserEmail);
+                bundle.putString("userName", currentUserDisplayName);
+                bundle.putString("userId", currentUserId);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
             return true;
         }
     };
 
     private void fillData(final Context context){
-        db.collection("message").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("message").whereEqualTo("clientid", currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -95,7 +118,7 @@ public class MessagesActivity extends AppCompatActivity {
 //                        Create and fill the card
                         CardView card = new CardView(context);
                         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        int px = dpToPx(10); //(int)convertDpToPx(context, 10);
+                        int px = Helpers.dpToPx(context, 10); //(int)convertDpToPx(context, 10);
                         params.setMargins(px, px, px, px);
                         card.setLayoutParams(params);
                         card.setContentPadding(px, px, px, px);
@@ -235,11 +258,11 @@ public class MessagesActivity extends AppCompatActivity {
 //                        Add card to container
                         mContainer.addView(card);
 
-                        Toast.makeText(context, "Data got: " + document.getData()/*.get("content").toString()*/, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, "Data got: " + document.getData()/*.get("content").toString()*/, Toast.LENGTH_LONG).show();
                         i += 1;
                     }
                 } else {
-                    Log.w("content", "Error getting documents.", task.getException());
+//                    Log.w("content", "Error getting documents.", task.getException());
                 }
             }});
 

@@ -41,11 +41,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-firestore:17.1.5'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
-
 //    implementation ("com.google.firebase:firebase-firestore:17.1.4") {
 //        exclude group: "com.squareup.okhttp", module: "okhttp"
 //        exclude group: "com.google.code.gson", module: "gson"
 //    }
+
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
 }
 
 //Firebase

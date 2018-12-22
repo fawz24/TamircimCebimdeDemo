@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@color/colorPrimary"
-                    android:onClick="goToHome"
+                    android:onClick="loginListener"
                     android:text="@string/login_button"
                     android:textColor="@android:color/white"
                     android:layout_alignParentRight="true"

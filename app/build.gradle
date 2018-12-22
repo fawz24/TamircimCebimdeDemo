@@ -40,6 +40,8 @@ dependencies {
 //    Firebase
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-firestore:17.1.5'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
+
 //    implementation ("com.google.firebase:firebase-firestore:17.1.4") {
 //        exclude group: "com.squareup.okhttp", module: "okhttp"
 //        exclude group: "com.google.code.gson", module: "gson"

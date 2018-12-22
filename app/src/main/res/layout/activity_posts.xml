@@ -35,11 +35,22 @@
             android:layout_height="match_parent"
             android:layout_below="@id/relativeTop"
             android:layout_above="@id/relativeBottom">
-
-            <TextView
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Posts"/>
+                android:layout_height="match_parent"
+                tools:context=".PostsActivityActivity"
+                android:id="@+id/postScrollView" >
+
+                <LinearLayout android:id="@+id/postContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </ScrollView>
+
         </RelativeLayout>
 
         <RelativeLayout android:id="@+id/relativeBottom"

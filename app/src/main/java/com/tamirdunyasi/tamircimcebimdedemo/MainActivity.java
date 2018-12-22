@@ -25,4 +25,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
+
+    public void goToHome(View view){
+        Intent intent = new Intent(this, HomeActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("user", "Fawzy");
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }

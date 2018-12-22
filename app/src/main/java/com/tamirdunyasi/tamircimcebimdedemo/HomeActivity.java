@@ -50,6 +50,12 @@ public class HomeActivity extends AppCompatActivity {
         mBottomMenu = mBottomNavigationView.getMenu();
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        mBottomMenu.getItem(0).setChecked(true);
+    }
+
     private void setUpViewPager(ViewPager viewPager) {
         mFragmentsPagerAdapter.addFragment(new HomeFragment());
         mFragmentsPagerAdapter.addFragment(new PostsFragment());

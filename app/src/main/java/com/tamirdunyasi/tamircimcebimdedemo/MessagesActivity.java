@@ -55,6 +55,13 @@ public class MessagesActivity extends AppCompatActivity {
         fillData(this);
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        mMenu.getItem(2).setChecked(true);
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -121,7 +128,7 @@ public class MessagesActivity extends AppCompatActivity {
                         divider.setLayoutParams(params);
                         divider.setBackgroundColor(getResources().getColor(R.color.colorDarkerGray));
 
-                        LinearLayout contents = new LinearLayout(context);
+                        final LinearLayout contents = new LinearLayout(context);
                         contents.setMinimumHeight(dpToPx(60));//(int)convertDpToPx(context, 60)
                         contents.setOrientation(LinearLayout.VERTICAL);
                         contents.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -135,6 +142,8 @@ public class MessagesActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     int i = 0;
                                     for (QueryDocumentSnapshot ctnt : task.getResult()) {
+//                                        Add message content
+                                        addMessageContent(context, contents, ctnt);
 ////                                        Create text view for content
 //                                        TextView content = new TextView(context);
 //                                        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -153,49 +162,56 @@ public class MessagesActivity extends AppCompatActivity {
 //                                        contents.addView(content);
 //                                        contents.addView(div);
                                     }
+
+//                        Create the relative layout
+                                    RelativeLayout relativeLayout = new RelativeLayout(context);
+                                    relativeLayout.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+//                        Create the link
+                                    TextView link = new TextView(context);
+                                    RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                    par.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
+                                    par.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                                    link.setLayoutParams(par);
+                                    link.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
+                                    link.setText("Yeni Mesaj");
+                                    link.setTextColor(getResources().getColor(R.color.colorSecond));
+                                    link.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            CardView cardView = (CardView)v.getParent().getParent().getParent().getParent();
+                                            Toast.makeText(context, "Link clicked: " + (String)cardView.getTag(), Toast.LENGTH_LONG).show();
+
+                                        }
+                                    });
+//                        Attach the link text view to the relative layout
+                                    relativeLayout.addView(link);
+
+//                        Attach the relative layout to the contents linear layout
+                                    contents.addView(relativeLayout);
                                 }
                             }
                                 });
-                        for (Map<String, Object> ctnt: (List<Map<String, Object>>)document.get("contents")) {
 //                        for (Map<String, Object> ctnt: (List<Map<String, Object>>)document.get("contents")) {
-//                              Create text view for content
-                            TextView content = new TextView(context);
-                            params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            params.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
-                            content.setLayoutParams(params);
-                            content.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
-                            content.setText(ctnt.get("body").toString());
-//                            content.setGravity(Gravity.CENTER);
-
-//                            Create a divider
-                            View div = new View(context);
-                            div.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1)));//(int)convertDpToPx(context, 1)
-                            div.setBackgroundColor(getResources().getColor(R.color.colorLightGray));
-
-//                            Attach the new content and divider to the contents linear layout
-                            contents.addView(content);
-                            contents.addView(div);
-                        }
-
-//                        Create the relative layout
-                        RelativeLayout relativeLayout = new RelativeLayout(context);
-                        relativeLayout.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-//                        Create the link
-                        TextView link = new TextView(context);
-                        RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        par.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
-                        par.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                        link.setLayoutParams(par);
-                        link.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
-                        link.setText("Yeni Mesaj");
-                        link.setTextColor(getResources().getColor(R.color.colorSecond));
-
-//                        Attach the link text view to the relative layout
-                        relativeLayout.addView(link);
-
-//                        Attach the relative layout to the contents linear layout
-                        contents.addView(relativeLayout);
+////                        for (Map<String, Object> ctnt: (List<Map<String, Object>>)document.get("contents")) {
+////                              Create text view for content
+//                            TextView content = new TextView(context);
+//                            params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                            params.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
+//                            content.setLayoutParams(params);
+//                            content.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
+//                            content.setText(ctnt.get("body").toString());
+////                            content.setGravity(Gravity.CENTER);
+//
+////                            Create a divider
+//                            View div = new View(context);
+//                            div.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1)));//(int)convertDpToPx(context, 1)
+//                            div.setBackgroundColor(getResources().getColor(R.color.colorLightGray));
+//
+////                            Attach the new content and divider to the contents linear layout
+//                            contents.addView(content);
+//                            contents.addView(div);
+//                        }
 
 //                        Attach elements to linear layout
                         linearLayout.addView(peer);
@@ -228,6 +244,26 @@ public class MessagesActivity extends AppCompatActivity {
             }});
 
         db.collection("users").document();
+    }
+
+    private void addMessageContent(Context context, LinearLayout contents, QueryDocumentSnapshot ctnt){
+//        Create text view for content
+        TextView content = new TextView(context);
+        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
+        content.setLayoutParams(params);
+        content.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
+        content.setText(ctnt.get("body").toString());
+//                            content.setGravity(Gravity.CENTER);
+
+//                            Create a divider
+        View div = new View(context);
+        div.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1)));//(int)convertDpToPx(context, 1)
+        div.setBackgroundColor(getResources().getColor(R.color.colorLightGray));
+
+//                            Attach the new content and divider to the contents linear layout
+        contents.addView(content);
+        contents.addView(div);
     }
 
     /**

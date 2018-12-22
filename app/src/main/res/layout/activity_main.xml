@@ -1,11 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    tools:layout_editor_absoluteY="25dp">
+    tools:context=".MainActivity">
+
+    <RelativeLayout android:id="@+id/relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout android:id="@+id/relativeTop"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_alignParentTop="true">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <android.support.design.widget.TabLayout android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="4dp"
+                    android:background="@drawable/primary_gray_border_bottom">
+
+                </android.support.design.widget.TabLayout>
+            </android.support.design.widget.AppBarLayout>
+        </RelativeLayout>
+
+        <RelativeLayout android:id="@+id/relativeMiddle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/relativeTop">
+
+            <TextView
+                android:id="@+id/mainActivityInLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:text="@string/main_activity_in_label"
+                android:textAlignment="center"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                app:fontFamily="sans-serif"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout android:id="@+id/loginForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mainActivityInLabel"
+                android:paddingTop="50dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Eposta"
+                    android:inputType="textEmailAddress"
+                    android:layout_centerHorizontal="true"/>
+
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:ems="10"
+                    android:hint="Şifre"
+                    android:inputType="textPassword" />
+
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/colorPrimary"
+                    android:onClick="goToHome"
+                    android:text="@string/login_button"
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right" />
+
+                <TextView
+                    android:id="@+id/registerLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:onClick="goToRegister"
+                    android:text="@string/register_link"
+                    android:textColor="@color/colorSecond"
+                    android:textSize="18sp"
+
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <!--<android.support.v7.widget.Toolbar-->
     <!--android:id="@+id/toolbar"-->
@@ -32,45 +127,21 @@
     <!--tools:layout_editor_absoluteX="112dp"-->
     <!--tools:layout_editor_absoluteY="414dp" />-->
 
-    <TextView
-        android:id="@+id/mainActivityInLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="77dp"
-        android:text="@string/main_activity_in_label"
-        android:textAlignment="center"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:fontFamily="sans-serif"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--<TextView-->
+        <!--android:id="@+id/mainActivityInLabel"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="77dp"-->
+        <!--android:text="@string/main_activity_in_label"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textSize="40sp"-->
+        <!--android:textStyle="bold"-->
+        <!--app:fontFamily="sans-serif"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="73dp"
-        android:background="@color/colorPrimary"
-        android:onClick="goToLogin"
-        android:text="@string/login_button"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/registerLink"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/registerLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="63dp"
-        android:onClick="goToRegister"
-        android:text="@string/register_link"
-        android:textColor="@color/colorSecond"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <!--<view-->
     <!--android:id="@+id/view"-->
@@ -83,4 +154,4 @@
     <!--app:layout_constraintStart_toStartOf="parent"-->
     <!--app:layout_constraintTop_toBottomOf="@+id/mainActivityInLabel" />-->
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

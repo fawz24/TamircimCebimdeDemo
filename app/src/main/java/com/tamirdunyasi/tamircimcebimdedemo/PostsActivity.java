@@ -31,6 +31,13 @@ public class PostsActivity extends AppCompatActivity {
         mMenu.getItem(1).setChecked(true);
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        mMenu.getItem(1).setChecked(true);
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

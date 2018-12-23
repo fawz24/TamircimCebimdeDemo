@@ -168,19 +168,38 @@ public class HomeActivity extends AppCompatActivity {
                         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
+                        //  Create text view for firmadi
+                        final TextView firmaadi = new TextView(context);
+                        firmaadi.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
+                        firmaadi.setTextSize(dpToPx(8));//convertDpToPx(context, 15)
+//                        firmaadi.setText(document.getString("title"));
+                        firmaadi.setGravity(Gravity.CENTER);
+
 //                        Create text view for peer
                         final TextView peer = new TextView(context);
                         peer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
-                        peer.setTextSize(dpToPx(8));//convertDpToPx(context, 20)
+                        peer.setTextSize(dpToPx(6));//convertDpToPx(context, 20)
                         peer.setText(document.getString("title"));
                         peer.setGravity(Gravity.CENTER);
 
-//                        Create text view for post
-                        final TextView firmaadi = new TextView(context);
-                        firmaadi.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
-                        firmaadi.setTextSize(dpToPx(6));//convertDpToPx(context, 15)
-//                        firmaadi.setText(document.getString("title"));
-                        firmaadi.setGravity(Gravity.CENTER);
+
+//                        create textview for firmadres
+                        final TextView firmaadres = new TextView(context);
+                        firmaadres.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));
+                        firmaadres.setTextSize(dpToPx(6));
+                        firmaadres.setGravity(Gravity.CENTER);
+
+//                       create text view for firma email
+                        final TextView firmaemail = new TextView(context);
+                        firmaemail.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));
+                        firmaemail.setTextSize(dpToPx(6));
+                        firmaemail.setGravity(Gravity.CENTER);
+//
+//                        create textview for firma teleofon
+                        final TextView firmatel = new TextView(context);
+                        firmatel.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));
+                        firmatel.setTextSize(dpToPx(6));
+                        firmatel.setGravity(Gravity.CENTER);
 
 //                        Create view for divider
                         View divider = new View(context);
@@ -216,10 +235,16 @@ public class HomeActivity extends AppCompatActivity {
                         //contents.addView(relativeLayout);
 
 //                        Attach elements to linear layout
-                        linearLayout.addView(peer);
+
                         linearLayout.addView(firmaadi);
+                        linearLayout.addView(peer);
                         linearLayout.addView(divider);
+                        linearLayout.addView(firmaadres);
+                        linearLayout.addView(firmaemail);
+                        linearLayout.addView(firmatel);
                         linearLayout.addView(contents);
+
+
 
 //                        Attach the linear layout to the card
                         card.addView(linearLayout);
@@ -241,7 +266,11 @@ public class HomeActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
-                                        setCompanyTitle(firmaadi, document.get("name").toString());
+                                        setCompanyTitle(firmaadi,document.get("name").toString());
+                                        setCompanyTitle(firmaadres, "Firma Adres : " +  document.get("address").toString());
+                                        setCompanyTitle(firmaemail, "Email : " + document.get("email").toString());
+                                        setCompanyTitle(firmatel, "Firma Telefon : " + document.get("phone").toString() );
+
 //                                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                         Toast.makeText(context, "Firma adı alındı", Toast.LENGTH_LONG).show();
                                     } else {
@@ -272,6 +301,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setCompanyTitle(TextView textView, String title) {
-        textView.setText(title);
-    }
+    textView.setText(title);
+}
 }

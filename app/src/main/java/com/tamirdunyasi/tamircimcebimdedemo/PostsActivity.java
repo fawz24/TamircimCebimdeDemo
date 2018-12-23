@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,6 +35,9 @@ public class PostsActivity extends AppCompatActivity {
 
     private LinearLayout pContainer;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+//    private User mUser;
 
     private LinearLayout mContainer;
     private BottomNavigationView mBottomNavigationView;
@@ -50,6 +55,33 @@ public class PostsActivity extends AppCompatActivity {
         mMenu.getItem(1).setChecked(true);
 
         pContainer = findViewById(R.id.postContainer);
+
+//        if (currentUser != null){
+//            db.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//                        if (document.exists()) {
+//                            String id = document.getId();
+//                            String address = document.get("address").toString();
+//                            String email = document.get("email").toString();
+//                            String name = document.get("name").toString();
+//                            String password = document.get("password").toString();
+//                            String phone = document.get("phone").toString();
+//                            String type = document.get("type").toString();
+//
+//                            mUser = new User(id, address, email, name, password, phone, type);
+//
+//                            fillData(this);
+//                        } else {
+//                        }
+//                    } else {
+//                    }
+//                }
+//            });
+//        }
+        fillData(this);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,6 +105,15 @@ public class PostsActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    public void newPostListener(View v){
+//        Intent intent = new Intent(this, PostDetailsActivity.class);
+//        Bundle b = new Bundle();
+//                    b.putString("postId", "");
+//                    intent.putExtras(b);
+//        startActivity(intent);
+    }
+//.whereEqualTo("clientid", currentUser.getUid())
     private void fillData(final Context context){
         db.collection("request").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -96,19 +137,74 @@ public class PostsActivity extends AppCompatActivity {
                         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-//                        Create text view for peer
-                        TextView peer = new TextView(context);
-                        peer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
-                        peer.setTextSize(dpToPx(8));//convertDpToPx(context, 20)
-                        peer.setText(document.getString("category"));
-                        peer.setGravity(Gravity.CENTER);
-
-//                       Create text view for talepbaslik
+//                        Create text view for talepbaslik
                         TextView talepbaslik = new TextView(context);
-                        talepbaslik.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
-                        talepbaslik.setTextSize(dpToPx(6));//convertDpToPx(context, 15)
+                        talepbaslik.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
+                        talepbaslik.setTextSize(dpToPx(8));//convertDpToPx(context, 20)
                         talepbaslik.setText(document.getString("title"));
                         talepbaslik.setGravity(Gravity.CENTER);
+
+                        // create textview for company name
+                        TextView companyname = new TextView(context);
+                        companyname.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
+                        companyname.setTextSize(dpToPx(4));//convertDpToPx(context, 15)
+                        companyname.setText("Gönderilen Firma : " + document.getString("companyname"));
+                        companyname.setGravity(Gravity.CENTER);
+
+//                        create textview for company id
+                        TextView companyid = new TextView(context);
+                        companyid.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
+                        companyid.setTextSize(dpToPx(4));//convertDpToPx(context, 15)
+                        companyid.setText("Firma ID : " + document.getString("companyid"));
+                        companyid.setGravity(Gravity.CENTER);
+
+
+//                        create textview for clientname
+                        TextView clientname = new TextView(context);
+                        clientname.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
+                        clientname.setTextSize(dpToPx(4));//convertDpToPx(context, 15)
+                        clientname.setText("Gönderen Müşteri : " + document.getString("clientname"));
+                        clientname.setGravity(Gravity.CENTER);
+
+                        //create textview for clientid
+                        TextView clientid = new TextView(context);
+                        clientid.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
+                        clientid.setTextSize(dpToPx(4));//convertDpToPx(context, 15)
+                        clientid.setText("Müşteri ID : " + document.getString("clientid"));
+                        clientid.setGravity(Gravity.CENTER);
+
+
+
+//                       Create text view for talepicerik
+                        TextView talepicerik = new TextView(context);
+                        talepicerik.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
+                        talepicerik.setTextSize(dpToPx(4));//convertDpToPx(context, 15)
+                        talepicerik.setText("Talep içeriği : " + document.getString("content"));
+                        talepicerik.setGravity(Gravity.CENTER);
+//
+
+//                        create textview for state
+                        TextView state = new TextView(context);
+                        state.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));//(int)convertDpToPx(context, 30)
+                        state.setTextSize(dpToPx(4));//convertDpToPx(context, 15)
+                        state.setText("Konum : " + document.getString("state"));
+                        state.setGravity(Gravity.CENTER);
+
+
+                        //create textview for category
+                        String kategoriler = "";
+                        int x = 0;
+                        List<String> kategoriListesi = (List<String>)document.get("category");
+                        for (; x < kategoriListesi.size() - 1; x++) {
+                            kategoriler += kategoriListesi.get(x) + ", ";
+                        }
+                        kategoriler += kategoriListesi.get(x);
+
+                        final TextView talepktg = new TextView(context);
+                        talepktg.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
+                        talepktg.setTextSize(dpToPx(4));//convertDpToPx(context, 20)
+                        talepktg.setText("Kategori : " + kategoriler);
+                        talepktg.setGravity(Gravity.CENTER);
 
 //                        Create view for divider
                         View divider = new View(context);
@@ -123,29 +219,6 @@ public class PostsActivity extends AppCompatActivity {
                         contents.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                         List<QueryDocumentSnapshot> list = new ArrayList<>();
-
-
-                        for (Map<String, Object> ctnt: (List<Map<String, Object>>)document.get("contents")) {
-//                        for (Map<String, Object> ctnt: (List<Map<String, Object>>)document.get("contents")) {
-//                              Create text view for content
-                            TextView content = new TextView(context);
-                            params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            params.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
-                            content.setLayoutParams(params);
-                            content.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
-                            content.setText(ctnt.get("body").toString());
-//                            content.setGravity(Gravity.CENTER);
-
-//                            Create a divider
-                            View div = new View(context);
-                            div.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1)));//(int)convertDpToPx(context, 1)
-                            div.setBackgroundColor(getResources().getColor(R.color.colorLightGray));
-
-//                            Attach the new content and divider to the contents linear layout
-                            contents.addView(content);
-                            contents.addView(div);
-                        }
-
 //                        Create the relative layout
                         RelativeLayout relativeLayout = new RelativeLayout(context);
                         relativeLayout.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -167,10 +240,18 @@ public class PostsActivity extends AppCompatActivity {
                         //contents.addView(relativeLayout);
 
 //                        Attach elements to linear layout
-                        linearLayout.addView(peer);
                         linearLayout.addView(talepbaslik);
+                        linearLayout.addView(companyname);
+                        linearLayout.addView(companyid);
+                        linearLayout.addView(clientname);
+                        linearLayout.addView(clientid);
+                        linearLayout.addView(talepicerik);
+                        linearLayout.addView(state);
+                        linearLayout.addView(talepktg);
+
                         linearLayout.addView(divider);
-                        linearLayout.addView(contents);
+
+                    ;
 
 //                        Attach the linear layout to the card
                         card.addView(linearLayout);

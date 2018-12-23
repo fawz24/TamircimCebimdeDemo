@@ -186,20 +186,57 @@ public class HomeActivity extends AppCompatActivity {
 //                        create textview for firmadres
                         final TextView firmaadres = new TextView(context);
                         firmaadres.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));
-                        firmaadres.setTextSize(dpToPx(6));
+                        firmaadres.setTextSize(dpToPx(4));
                         firmaadres.setGravity(Gravity.CENTER);
 
 //                       create text view for firma email
                         final TextView firmaemail = new TextView(context);
                         firmaemail.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));
-                        firmaemail.setTextSize(dpToPx(6));
+                        firmaemail.setTextSize(dpToPx(4));
                         firmaemail.setGravity(Gravity.CENTER);
 //
 //                        create textview for firma teleofon
                         final TextView firmatel = new TextView(context);
                         firmatel.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(30)));
-                        firmatel.setTextSize(dpToPx(6));
+                        firmatel.setTextSize(dpToPx(4));
                         firmatel.setGravity(Gravity.CENTER);
+//
+//                        create textview for category
+                        String kategoriler = "";
+                        int i = 0;
+                        List<String> kategoriListesi = (List<String>)document.get("category");
+                        for (; i < kategoriListesi.size() - 1; i++) {
+                            kategoriler += kategoriListesi.get(i) + ", ";
+                        }
+                        kategoriler += kategoriListesi.get(i);
+
+                        final TextView firmaktg = new TextView(context);
+                        firmaktg.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
+                        firmaktg.setTextSize(dpToPx(4));//convertDpToPx(context, 20)
+                        firmaktg.setText("Kategori : " + kategoriler);
+                        firmaktg.setGravity(Gravity.CENTER);
+
+//                        create textview for taxidno
+                        final TextView firmavergino = new TextView(context);
+                        firmavergino.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
+                        firmavergino.setTextSize(dpToPx(4));//convertDpToPx(context, 20)
+                        firmavergino.setText("Vergi Numarası : " + document.getString("taxidno"));
+                        firmavergino.setGravity(Gravity.CENTER);
+
+//                      create textview for taxoffice
+                        final TextView firmavergidaire = new TextView(context);
+                        firmavergidaire.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
+                        firmavergidaire.setTextSize(dpToPx(4));//convertDpToPx(context, 20)
+                        firmavergidaire.setText("Vergi dairesi : " + document.getString("taxoffice"));
+                        firmavergidaire.setGravity(Gravity.CENTER);
+
+//                        create textview for registration no
+                        final TextView kayitno = new TextView(context);
+                        kayitno.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
+                        kayitno.setTextSize(dpToPx(4));//convertDpToPx(context, 20)
+                        kayitno.setText("Kayıt no : " + document.getString("registrationno"));
+                        kayitno.setGravity(Gravity.CENTER);
+
 
 //                        Create view for divider
                         View divider = new View(context);
@@ -242,10 +279,11 @@ public class HomeActivity extends AppCompatActivity {
                         linearLayout.addView(firmaadres);
                         linearLayout.addView(firmaemail);
                         linearLayout.addView(firmatel);
+                        linearLayout.addView(firmavergidaire);
+                        linearLayout.addView(firmavergino);
+                        linearLayout.addView(kayitno);
+                        linearLayout.addView(firmaktg);
                         linearLayout.addView(contents);
-
-
-
 //                        Attach the linear layout to the card
                         card.addView(linearLayout);
 

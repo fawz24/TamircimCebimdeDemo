@@ -149,8 +149,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-        Client user = new Client(address, email, name, password, phone, surname, 0);
-        createAccount(this, user, 0);
+        Client user = new Client(address, email, name, password, phone, surname, "cl");
+        createAccount(this, user, "cl");
     }
 
     public void setCurrentUser(FirebaseUser currentUser) {
@@ -161,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
         return currentUser;
     }
 
-    private void createAccount(final RegisterActivity context, final User user, final int type){
+    private void createAccount(final RegisterActivity context, final User user, final String type){
         dbAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -190,7 +190,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 //                                      Create a new client
                                     Map<String, Object> clientDoc = new HashMap<>();
-                                    if (type == 0){
+                                    if (type.equals("cl")){
                                         clientDoc.put("surname", ((Client)user).getSurname());
 
                                         db.collection("client").document(context.getCurrentUser().getUid())
@@ -227,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     }
                                                 });
                                     }
-                                    else if (type == 1){
+                                    else if (type.equals("co")){
 //                                        Create a new company document
                                         Map<String, Object> companyDoc = new HashMap<>();
 //                                        companyDoc.put("category", ((Company)user).getCategory());

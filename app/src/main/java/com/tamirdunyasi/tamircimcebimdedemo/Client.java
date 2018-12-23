@@ -3,7 +3,7 @@ package com.tamirdunyasi.tamircimcebimdedemo;
 public class Client extends User {
     protected String surname;
 
-    public Client(String address, String email, String name, String password, String phone, String surname, int type){
+    public Client(String address, String email, String name, String password, String phone, String surname, String type){
         this.address = address;
         this.email = email;
         this.name = name;
@@ -13,7 +13,7 @@ public class Client extends User {
         this.surname = surname;
     }
 
-    public Client(String id, String address, String email, String name, String password, String phone, String surname, int type){
+    public Client(String id, String address, String email, String name, String password, String phone, String surname, String type){
         this.id = id;
         this.address = address;
         this.email = email;

@@ -11,7 +11,7 @@ public class Company extends User {
     protected String taxOffice;
     protected String title;
 
-    public Company(String address, String email, String name, String password, String phone, int type, List<String> category,
+    public Company(String address, String email, String name, String password, String phone, String type, List<String> category,
                    String registrationNo, String taxIdNo, String taxOffice, String title){
         this.address = address;
         this.email = email;
@@ -27,7 +27,7 @@ public class Company extends User {
         this.point = 0;
     }
 
-    public Company(String id, String address, String email, String name, String password, String phone, int type, List<String> category,
+    public Company(String id, String address, String email, String name, String password, String phone, String type, List<String> category,
                    String registrationNo, String taxIdNo, String taxOffice, String title){
         this.id = id;
         this.address = address;

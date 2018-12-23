@@ -24,7 +24,8 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".MessagesActivity" />
         <activity android:name=".PostsActivity" />
-        <activity android:name=".AccountActivity"></activity>
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".MessageDetailsActivity"></activity>
     </application>
 
 </manifest>

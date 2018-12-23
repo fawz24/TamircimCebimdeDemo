@@ -1,27 +1,36 @@
 package com.tamirdunyasi.tamircimcebimdedemo;
 
-public abstract class User {
+public class User {
     protected String id;
     protected String address;
     protected String email;
     protected String name;
     protected String password;
     protected String phone;
-    protected int type;
+    protected String type;
 
-//    public User(){
-//
-//    }
+    public User(){
 
-//    public User(String id, String address, String email, String name, String password, String phone, int type){
-//        this.id = id;
-//        this.address = address;
-//        this.email = email;
-//        this.name = name;
-//        this.password = password;
-//        this.phone = phone;
-//        this.type = type;
-//    }
+    }
+
+    public User(String address, String email, String name, String password, String phone, String type){
+        this.address = address;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.type = type;
+    }
+
+    public User(String id, String address, String email, String name, String password, String phone, String type){
+        this.id = id;
+        this.address = address;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.type = type;
+    }
 
     public String getId() {
         return id;
@@ -71,11 +80,11 @@ public abstract class User {
         this.phone = phone;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 }

@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -38,6 +37,8 @@ public class MessagesActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth dbAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser;
+
+    private User mUser;
 
     private String currentUserEmail;
     private String currentUserDisplayName;
@@ -67,10 +68,34 @@ public class MessagesActivity extends AppCompatActivity {
 
         mContainer = findViewById(R.id.messageContainer);
 
-        fillData(this);
-
 //        Toast.makeText(this, "User Id: " + currentUserId, Toast.LENGTH_LONG).show();
         Toast.makeText(this, "User Id: " + currentUser.getUid(), Toast.LENGTH_LONG).show();
+
+        final MessagesActivity context = this;
+
+        db.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String id = document.getId();
+                        String address = document.get("address").toString();
+                        String email = document.get("email").toString();
+                        String name = document.get("name").toString();
+                        String password = document.get("password").toString();
+                        String phone = document.get("phone").toString();
+                        String type = document.get("type").toString();
+
+                        mUser = new User(id, address, email, name, password, phone, type);
+                        fillData(context);
+                    } else {
+                    }
+                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     @Override
@@ -107,8 +132,17 @@ public class MessagesActivity extends AppCompatActivity {
         }
     };
 
-    private void fillData(final Context context){
-        db.collection("message").whereEqualTo("clientid", currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public User getmUser() {
+        return mUser;
+    }
+
+    private void fillData(final MessagesActivity context){
+        String user = "clientid";
+        User u = context.getmUser();
+        if (u.getType().equals("co")){
+            user = "companyid";
+        }
+        db.collection("message").whereEqualTo(user, currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -146,7 +180,7 @@ public class MessagesActivity extends AppCompatActivity {
 
 //                        Create view for divider
                         View divider = new View(context);
-                        params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1));//(int)convertDpToPx(context, 1)
+                        params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1));
                         params.setMargins(0,  dpToPx(5), 0, 0);//(int)convertDpToPx(context, 5)
                         divider.setLayoutParams(params);
                         divider.setBackgroundColor(getResources().getColor(R.color.colorDarkerGray));
@@ -167,23 +201,6 @@ public class MessagesActivity extends AppCompatActivity {
                                     for (QueryDocumentSnapshot ctnt : task.getResult()) {
 //                                        Add message content
                                         addMessageContent(context, contents, ctnt);
-////                                        Create text view for content
-//                                        TextView content = new TextView(context);
-//                                        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                                        params.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
-//                                        content.setLayoutParams(params);
-//                                        content.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
-//                                        content.setText(ctnt.get("body").toString());
-////                            content.setGravity(Gravity.CENTER);
-//
-////                            Create a divider
-//                                        View div = new View(context);
-//                                        div.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(1)));//(int)convertDpToPx(context, 1)
-//                                        div.setBackgroundColor(getResources().getColor(R.color.colorLightGray));
-//
-////                            Attach the new content and divider to the contents linear layout
-//                                        contents.addView(content);
-//                                        contents.addView(div);
                                     }
 
 //                        Create the relative layout
@@ -204,6 +221,12 @@ public class MessagesActivity extends AppCompatActivity {
                                         public void onClick(View v) {
                                             CardView cardView = (CardView)v.getParent().getParent().getParent().getParent();
                                             Toast.makeText(context, "Link clicked: " + (String)cardView.getTag(), Toast.LENGTH_LONG).show();
+
+                                            Intent intent = new Intent(context, MessageDetailsActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("messageId", (String)cardView.getTag());
+                                            intent.putExtras(bundle);
+                                            context.startActivity(intent);
 
                                         }
                                     });
@@ -265,8 +288,6 @@ public class MessagesActivity extends AppCompatActivity {
 //                    Log.w("content", "Error getting documents.", task.getException());
                 }
             }});
-
-        db.collection("users").document();
     }
 
     private void addMessageContent(Context context, LinearLayout contents, QueryDocumentSnapshot ctnt){
@@ -276,7 +297,17 @@ public class MessagesActivity extends AppCompatActivity {
         params.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
         content.setLayoutParams(params);
         content.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
-        content.setText(ctnt.get("body").toString());
+        if (ctnt.get("senderid").toString().equals(mUser.id)){
+            content.setPadding(0, 0, Helpers.dpToPx(this, 60), 0);
+        }
+        else {
+            content.setPadding(Helpers.dpToPx(this, 60), 0, 0, 0);
+        }
+        String body = ctnt.get("body").toString();
+        if (body.length() > 20) {
+            body = body.substring(0, 20) + "...";
+        }
+        content.setText(body);
 //                            content.setGravity(Gravity.CENTER);
 
 //                            Create a divider

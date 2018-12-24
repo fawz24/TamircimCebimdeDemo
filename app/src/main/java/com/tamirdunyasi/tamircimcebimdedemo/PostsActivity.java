@@ -29,6 +29,12 @@ public class PostsActivity extends AppCompatActivity {
 
         mMenu = mBottomNavigationView.getMenu();
         mMenu.getItem(1).setChecked(true);
+
+        Intent intent = new Intent(this, PostDetailsActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("postId", "TcLxz1GpDn95HTsSRql4");
+//        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

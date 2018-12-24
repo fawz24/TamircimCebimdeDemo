@@ -26,6 +26,9 @@ public class HomeActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
     private TabLayout tabLayout;
     private Menu mBottomMenu;
+    private String currentUserId;
+    private String currentUserDisplayName;
+    private String currentUserEmail;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -35,6 +38,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 //        setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.home_toolbar));
         Bundle bundle = getIntent().getExtras();
+        currentUserId = bundle.getString("userId");
+        currentUserEmail = bundle.getString("userEmail");
+        currentUserDisplayName = bundle.getString("userName");
+
 //        TextView title = findViewById(R.id.toolbar_title);
 //        title.setText(String.format("%s%s!", title.getText(), bundle.get("user")));
 
@@ -48,6 +55,8 @@ public class HomeActivity extends AppCompatActivity {
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
 
         mBottomMenu = mBottomNavigationView.getMenu();
+
+        Toast.makeText(this, "User Id: " + currentUserId, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -84,24 +93,29 @@ public class HomeActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Intent intent;
+            Intent intent = null;
             switch (menuItem.getItemId()){
                 case R.id.nav_posts:
                     intent = new Intent(HomeActivity.this, PostsActivity.class);
-                    startActivity(intent);
                     break;
                 case R.id.nav_messages:
                     intent = new Intent(HomeActivity.this, MessagesActivity.class);
-                    startActivity(intent);
 //                    mViewPager.setCurrentItem(2);
                     break;
                 case R.id.nav_account:
                     intent = new Intent(HomeActivity.this, AccountActivity.class);
-                    startActivity(intent);
 //                    mBottomMenu.clear();
 //                    mBottomNavigationView.inflateMenu(R.menu.navigation_company_menu);
 //                    mBottomMenu = mBottomNavigationView.getMenu();
                     break;
+            }
+            if (intent != null){
+                Bundle bundle = new Bundle();
+                bundle.putString("userEmail", currentUserEmail);
+                bundle.putString("userName", currentUserDisplayName);
+                bundle.putString("userId", currentUserId);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
             return true;
         }

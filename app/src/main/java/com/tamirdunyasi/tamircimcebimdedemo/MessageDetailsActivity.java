@@ -87,6 +87,7 @@ public class MessageDetailsActivity extends AppCompatActivity {
     public void saveMessage(String messageId){
         final EditText messageEdit = findViewById(R.id.newMessageContent);
         final String content = messageEdit.getText().toString();
+        final LinearLayout messageContainer = findViewById(R.id.messageContainer);
 
         if (content.isEmpty()){
             return;
@@ -106,7 +107,25 @@ public class MessageDetailsActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getBaseContext(), "Mesaj kaydedildi!\n" + content, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Mesaj kaydedildi!", Toast.LENGTH_LONG).show();
+
+//                          Create text view for content
+                        TextView ctnt = new TextView(getBaseContext());
+                        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.setMargins(0,  Helpers.dpToPx(getBaseContext(),5), 0, Helpers.dpToPx(getBaseContext(), 5));
+                        ctnt.setLayoutParams(params);
+                        ctnt.setTextSize(Helpers.dpToPx(getBaseContext(), 7));
+                        ctnt.setPadding(0, 0, Helpers.dpToPx(getBaseContext(), 60), 0);
+                        ctnt.setText(content);
+//                          Create a divider
+                        View div = new View(getBaseContext());
+                        div.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Helpers.dpToPx(getBaseContext(), 1)));
+                        div.setBackgroundColor(getResources().getColor(R.color.colorLightGray));
+
+//                          Attach the new content and divider to the contents linear layout
+                        messageContainer.addView(div, 0);
+                        messageContainer.addView(ctnt, 0);
+
                         messageEdit.setText("");
                         sendButton.setClickable(true);
                     }
@@ -122,10 +141,26 @@ public class MessageDetailsActivity extends AppCompatActivity {
     }
 
     public void fillData(){
-        String user = "clientid";
+        String user = "companyname";
         if (mUser.type.equals("co")){
-            user = "companyid";
+            user = "clientname";
         }
+        final String peerText = user;
+
+        final TextView peer = findViewById(R.id.peer);
+        final TextView title = findViewById(R.id.title);
+
+        db.collection("message").document(mMessageId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+
+                    peer.setText(doc.get(peerText).toString());
+                    title.setText(doc.get("requesttitle").toString());
+                }
+            }
+        });
 
         db.collection("message").document(mMessageId).collection("contents")
                 .orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -143,7 +178,6 @@ public class MessageDetailsActivity extends AppCompatActivity {
 
     private void addMessageContent(/*Context context, LinearLayout contents, */QueryDocumentSnapshot ctnt){
         LinearLayout messageContainer = findViewById(R.id.messageContainer);
-
 //          Create text view for content
         TextView content = new TextView(this);
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

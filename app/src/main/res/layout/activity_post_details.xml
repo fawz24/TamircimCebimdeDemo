@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostDetailsActivity">
+
+    <RelativeLayout android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout android:id="@+id/relativeTop"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_alignParentTop="true">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <android.support.design.widget.TabLayout android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="4dp"
+                    android:background="@drawable/primary_gray_border_bottom">
+
+                </android.support.design.widget.TabLayout>
+            </android.support.design.widget.AppBarLayout>
+        </RelativeLayout>
+
+        <RelativeLayout android:id="@+id/relativeMiddle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/relativeTop">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--<RelativeLayout android:id="@+id/relativeContainer"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_above="@id/newMessage"-->
+                <!--android:padding="15dp">-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="80dp"
+                    android:padding="15dp"
+                    android:orientation="vertical">
+
+                    <TextView android:id="@+id/peer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="Talep Bilgileri"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="7dp">
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:text="Durum"
+                            android:layout_gravity="top"/>
+
+                        <TextView android:id="@+id/status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:text="Yeni"
+                            android:textStyle="bold"
+                            android:layout_gravity="top"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="7dp">
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:text="Başlık"
+                            android:layout_gravity="center_vertical"/>
+
+                        <EditText android:id="@+id/postTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="50dp"
+                            android:layout_gravity="center_vertical"
+                            android:hint="Başlık giriniz"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="7dp">
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:text="Açıklama"
+                            android:layout_gravity="center_vertical"/>
+
+                        <EditText android:id="@+id/postContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="100dp"
+                            android:layout_gravity="center_vertical"
+                            android:inputType="textMultiLine"
+                            android:maxLines="5"
+                            android:scrollbars="vertical"
+                            android:overScrollMode="always"
+                            android:scrollbarStyle="insideInset"
+                            android:hint="Arızayı anlatan bir metin (en fazla 300 harf)" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="7dp">
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:text="Kategori"
+                            android:layout_gravity="center_vertical"/>
+
+                        <Spinner android:id="@+id/category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="40dp">
+
+                        </Spinner>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="7dp">
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:text="Şirket"
+                            android:layout_gravity="center_vertical"/>
+
+                        <EditText android:id="@+id/companyName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text=""/>
+                    </LinearLayout>
+
+                    <RadioGroup android:id="@+id/voteGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+
+                        <TextView android:id="@+id/pointText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="Puan ver"
+                            android:textSize="15dp"/>
+
+                        <LinearLayout android:id="@+id/pointStars"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:visibility="gone">
+
+                            <ImageView android:id="@+id/pointStar1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                app:srcCompat="@drawable/ic_star_border_second_24dp" />
+
+                            <ImageView android:id="@+id/pointStar2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_star_border_second_24dp"/>
+                        </LinearLayout>
+
+                        <RadioButton android:id="@+id/dislike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tavsiye etmem"
+                            android:onClick="voteListener" />
+
+                        <RadioButton
+                            android:id="@+id/notSure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="voteListener"
+                            android:text="Olabilir"/>
+
+                        <RadioButton android:id="@+id/like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tavsiye ederim"
+                            android:onClick="voteListener"/>
+                    </RadioGroup>
+
+                    <Button android:id="@+id/saveButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kaydet"
+                        android:onClick="saveListener"
+                        android:textColor="@android:color/white"
+                        android:background="@color/colorSecond"
+                        android:layout_gravity="right"/>
+                </LinearLayout>
+                <!--</RelativeLayout>-->
+
+                <!--<RelativeLayout android:id="@+id/newMessage"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:padding="10dp">-->
+
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="@android:color/darker_gray" />-->
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="0dp">-->
+
+                <!--<RelativeLayout-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="75"-->
+                <!--android:layout_height="match_parent">-->
+
+                <!--<EditText android:id="@+id/newMessageContent"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:inputType="textMultiLine"/>-->
+                <!--&lt;!&ndash;android:layout_alignRight="@id/relativeSendButton"&ndash;&gt;-->
+                <!--</RelativeLayout>-->
+
+                <!--<RelativeLayout android:id="@+id/relativeSendButton"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="25"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:elevation="5dp">-->
+
+                <!--<android.support.design.widget.FloatingActionButton-->
+                <!--android:id="@+id/sendButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:clickable="true"-->
+                <!--android:onClick="sendPostListener"-->
+                <!--app:backgroundTint="@color/colorLightGray"-->
+                <!--app:srcCompat="@drawable/ic_send_second_24dp" />-->
+                <!--</RelativeLayout>-->
+                <!--</LinearLayout>-->
+                <!--</RelativeLayout>-->
+            </ScrollView>
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

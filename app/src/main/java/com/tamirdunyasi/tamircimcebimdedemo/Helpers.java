@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.widget.ArrayAdapter;
 
 import com.google.common.hash.Hashing;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +37,18 @@ public class Helpers {
         Intent i = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(i);
+    }
+
+    public static int getSelectedCategory(Context context, String category){
+        ArrayAdapter<CharSequence> categoriesAdapter = ArrayAdapter.createFromResource(context,
+                R.array.category_array, android.R.layout.simple_spinner_item);
+//          Specify the layout to use when the list of choices appears
+        categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        int result = categoriesAdapter.getPosition(category);
+        if (result < 0){
+            result = 0;
+        }
+        return result;
     }
 
 //    public static void createUser(Context context, FirebaseUser authUser, )

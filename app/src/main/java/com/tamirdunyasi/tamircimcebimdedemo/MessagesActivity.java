@@ -35,8 +35,7 @@ import java.util.Map;
 public class MessagesActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth dbAuth = FirebaseAuth.getInstance();
-    private FirebaseUser currentUser;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
     private User mUser;
 
@@ -53,12 +52,13 @@ public class MessagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
 
-        currentUser = dbAuth.getCurrentUser();
-
         Bundle bundle = getIntent().getExtras();
-        currentUserId = bundle.getString("userId");
-        currentUserEmail = bundle.getString("userEmail");
-        currentUserDisplayName = bundle.getString("userName");
+//        currentUserId = bundle.getString("userId");
+//        currentUserEmail = bundle.getString("userEmail");
+//        currentUserDisplayName = bundle.getString("userName");
+        currentUserId = currentUser.getUid();
+        currentUserDisplayName = currentUser.getEmail();
+        currentUserEmail = currentUser.getEmail();
 
         mBottomNavigationView = findViewById(R.id.navigation_bottom);
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
@@ -67,9 +67,6 @@ public class MessagesActivity extends AppCompatActivity {
         mMenu.getItem(2).setChecked(true);
 
         mContainer = findViewById(R.id.messageContainer);
-
-//        Toast.makeText(this, "User Id: " + currentUserId, Toast.LENGTH_LONG).show();
-        Toast.makeText(this, "User Id: " + currentUser.getUid(), Toast.LENGTH_LONG).show();
 
         final MessagesActivity context = this;
 
@@ -89,10 +86,7 @@ public class MessagesActivity extends AppCompatActivity {
 
                         mUser = new User(id, address, email, name, password, phone, type);
                         fillData(context);
-                    } else {
                     }
-                } else {
-//                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
@@ -137,16 +131,19 @@ public class MessagesActivity extends AppCompatActivity {
     }
 
     private void fillData(final MessagesActivity context){
-        String user = "clientid";
+        String userId = "clientid";
+        String peerN = "companyname";
         User u = context.getmUser();
         if (u.getType().equals("co")){
-            user = "companyid";
+            userId = "companyid";
+            peerN = "clientname";
         }
-        db.collection("message").whereEqualTo(user, currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        final String peerName = peerN;
+
+        db.collection("message").whereEqualTo(userId, currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    int i = 0;
                     for (QueryDocumentSnapshot document : task.getResult()) {
 //                        Log.d("content", document.getId() + " => " + document.getData());
 //                        Create and fill the card
@@ -168,7 +165,7 @@ public class MessagesActivity extends AppCompatActivity {
                         TextView peer = new TextView(context);
                         peer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(40))); //(int)convertDpToPx(context, 40)
                         peer.setTextSize(dpToPx(8));//convertDpToPx(context, 20)
-                        peer.setText(document.getString("companyname"));
+                        peer.setText(document.getString(peerName));
                         peer.setGravity(Gravity.CENTER);
 
 //                        Create text view for post
@@ -197,7 +194,6 @@ public class MessagesActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    int i = 0;
                                     for (QueryDocumentSnapshot ctnt : task.getResult()) {
 //                                        Add message content
                                         addMessageContent(context, contents, ctnt);
@@ -207,31 +203,31 @@ public class MessagesActivity extends AppCompatActivity {
                                     RelativeLayout relativeLayout = new RelativeLayout(context);
                                     relativeLayout.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-//                        Create the link
-                                    TextView link = new TextView(context);
-                                    RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                    par.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
-                                    par.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                                    link.setLayoutParams(par);
-                                    link.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
-                                    link.setText("Yeni Mesaj");
-                                    link.setTextColor(getResources().getColor(R.color.colorSecond));
-                                    link.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            CardView cardView = (CardView)v.getParent().getParent().getParent().getParent();
-                                            Toast.makeText(context, "Link clicked: " + (String)cardView.getTag(), Toast.LENGTH_LONG).show();
-
-                                            Intent intent = new Intent(context, MessageDetailsActivity.class);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("messageId", (String)cardView.getTag());
-                                            intent.putExtras(bundle);
-                                            context.startActivity(intent);
-
-                                        }
-                                    });
+////                        Create the link
+//                                    TextView link = new TextView(context);
+//                                    RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                                    par.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
+//                                    par.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+//                                    link.setLayoutParams(par);
+//                                    link.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
+//                                    link.setText("Yeni Mesaj");
+//                                    link.setTextColor(getResources().getColor(R.color.colorSecond));
+//                                    link.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+////                                            CardView cardView = (CardView)v.getParent().getParent().getParent().getParent();
+////                                            Toast.makeText(context, "Link clicked: " + (String)cardView.getTag(), Toast.LENGTH_LONG).show();
+//
+////                                            Intent intent = new Intent(context, MessageDetailsActivity.class);
+////                                            Bundle bundle = new Bundle();
+////                                            bundle.putString("messageId", (String)cardView.getTag());
+////                                            intent.putExtras(bundle);
+////                                            context.startActivity(intent);
+//
+//                                        }
+//                                    });
 //                        Attach the link text view to the relative layout
-                                    relativeLayout.addView(link);
+//                                    relativeLayout.addView(link);
 
 //                        Attach the relative layout to the contents linear layout
                                     contents.addView(relativeLayout);
@@ -274,18 +270,20 @@ public class MessagesActivity extends AppCompatActivity {
                         card.setOnClickListener(new View.OnClickListener(){
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(context, (String)v.getTag(), Toast.LENGTH_LONG).show();
+//                                Toast.makeText(context, (String)v.getTag(), Toast.LENGTH_LONG).show();
+
+                                Intent intent = new Intent(context, MessageDetailsActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("messageId", v.getTag().toString());
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
                             }
                         });
 
 //                        Add card to container
                         mContainer.addView(card);
-
-//                        Toast.makeText(context, "Data got: " + document.getData()/*.get("content").toString()*/, Toast.LENGTH_LONG).show();
-                        i += 1;
                     }
                 } else {
-//                    Log.w("content", "Error getting documents.", task.getException());
                 }
             }});
     }
@@ -296,7 +294,7 @@ public class MessagesActivity extends AppCompatActivity {
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,  dpToPx(5), 0, dpToPx(5));//(int)convertDpToPx(context, 5)
         content.setLayoutParams(params);
-        content.setTextSize(dpToPx(7));//convertDpToPx(context, 15)
+        content.setTextSize(dpToPx(7));
         if (ctnt.get("senderid").toString().equals(mUser.id)){
             content.setPadding(0, 0, Helpers.dpToPx(this, 60), 0);
         }

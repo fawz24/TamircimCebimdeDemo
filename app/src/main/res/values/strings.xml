@@ -13,4 +13,12 @@
     <string name="hello_messages_fragment">Hello Fragment My Messages</string>
     <string name="hello_company_register_fragment">Fragment Company Registration</string>
     <string name="hello_personal_register_fragment">Fragment Personal Registration</string>
+
+    <string-array name="category_array">
+        <item>Kategori Seçiniz</item>
+        <item>Elektrik</item>
+        <item>Su Tesisat</item>
+        <item>Boya</item>
+        <item>Araba</item>
+    </string-array>
 </resources>

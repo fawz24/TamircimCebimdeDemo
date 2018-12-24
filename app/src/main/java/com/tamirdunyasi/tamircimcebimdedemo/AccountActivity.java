@@ -47,7 +47,7 @@ public class AccountActivity extends AppCompatActivity {
 
         currentUser = dbAuth.getCurrentUser();
 
-        Toast.makeText(this, "User Id: " + currentUserId, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "User Id: " + currentUserId, Toast.LENGTH_LONG).show();
 //
 //        if (currentUser != null){
 //            Toast.makeText(this, "User: " + currentUser.getDisplayName().toString(), Toast.LENGTH_LONG).show();

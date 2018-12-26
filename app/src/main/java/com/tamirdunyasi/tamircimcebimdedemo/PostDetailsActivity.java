@@ -266,7 +266,7 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
             value.put("category", categoriesAdapter.getItem(category.getSelectedItemPosition()).toString());
             value.put("title", title);
             value.put("content", content);
-//            db.collection("request").document(mPost.id).set(value).
+
             if (!company.isEmpty()){
 //                status = "Beklemede";
                 final String previousStatus = prevStatus;

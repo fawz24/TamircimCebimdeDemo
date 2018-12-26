@@ -393,7 +393,6 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
 //            return;
 //        }
 //        recreate();
-        getParent().recreate();
         finish();
     }
 

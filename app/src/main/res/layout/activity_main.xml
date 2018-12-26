@@ -34,71 +34,81 @@
             android:layout_height="match_parent"
             android:layout_below="@id/relativeTop">
 
-            <TextView
-                android:id="@+id/mainActivityInLabel"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:text="@string/main_activity_in_label"
-                android:textAlignment="center"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                app:fontFamily="sans-serif"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_height="match_parent">
 
-            <LinearLayout android:id="@+id/loginForm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/mainActivityInLabel"
-                android:paddingTop="40dp"
-                android:paddingBottom="15dp"
-                android:paddingLeft="35dp"
-                android:paddingRight="35dp"
-                android:orientation="vertical" >
-
-                <EditText
-                    android:id="@+id/emailEditText"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Eposta"
-                    android:inputType="textEmailAddress"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_height="match_parent">
 
-                <EditText
-                    android:id="@+id/passwordEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:ems="10"
-                    android:hint="Şifre"
-                    android:inputType="textPassword" />
+                    <TextView
+                        android:id="@+id/mainActivityInLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="60dp"
+                        android:text="@string/main_activity_in_label"
+                        android:textAlignment="center"
+                        android:textSize="40sp"
+                        android:textStyle="bold"
+                        app:fontFamily="sans-serif"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"/>
 
-                <Button
-                    android:id="@+id/loginButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/colorPrimary"
-                    android:onClick="loginListener"
-                    android:text="@string/login_button"
-                    android:textColor="@android:color/white"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="right" />
+                    <LinearLayout android:id="@+id/loginForm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/mainActivityInLabel"
+                        android:paddingTop="40dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="35dp"
+                        android:paddingRight="35dp"
+                        android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/registerLink"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:onClick="goToRegister"
-                    android:text="@string/register_link"
-                    android:textColor="@color/colorSecond"
-                    android:textSize="18sp"
+                        <EditText
+                            android:id="@+id/emailEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="Eposta"
+                            android:inputType="textEmailAddress"
+                            android:layout_centerHorizontal="true"/>
 
-                    android:layout_gravity="center_horizontal" />
-            </LinearLayout>
+                        <EditText
+                            android:id="@+id/passwordEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:ems="10"
+                            android:hint="Şifre"
+                            android:inputType="textPassword" />
+
+                        <Button
+                            android:id="@+id/loginButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:background="@color/colorPrimary"
+                            android:onClick="loginListener"
+                            android:text="@string/login_button"
+                            android:textColor="@android:color/white"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="right" />
+
+                        <TextView
+                            android:id="@+id/registerLink"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="50dp"
+                            android:onClick="goToRegister"
+                            android:text="@string/register_link"
+                            android:textColor="@color/colorSecond"
+                            android:textSize="18sp"
+
+                            android:layout_gravity="center_horizontal" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </ScrollView>
         </RelativeLayout>
     </RelativeLayout>
 

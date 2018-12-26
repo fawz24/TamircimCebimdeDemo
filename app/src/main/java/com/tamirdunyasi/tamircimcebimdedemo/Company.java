@@ -5,7 +5,7 @@ import java.util.List;
 public class Company extends User {
 
     protected List<String> category;
-    protected int point;
+    protected long point;
     protected String registrationNo;
     protected String taxIdNo;
     protected String taxOffice;
@@ -27,6 +27,22 @@ public class Company extends User {
         this.point = 0;
     }
 
+    public Company(String address, String email, String name, String password, String phone, String type, List<String> category,
+                   String registrationNo, String taxIdNo, String taxOffice, String title, long point){
+        this.address = address;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.type = type;
+        this.category = category;
+        this.registrationNo = registrationNo;
+        this.taxIdNo = taxIdNo;
+        this.taxOffice = taxOffice;
+        this.title = title;
+        this.point = point;
+    }
+
     public Company(String id, String address, String email, String name, String password, String phone, String type, List<String> category,
                    String registrationNo, String taxIdNo, String taxOffice, String title){
         this.id = id;
@@ -44,6 +60,23 @@ public class Company extends User {
         this.point = 0;
     }
 
+    public Company(String id, String address, String email, String name, String password, String phone, String type, List<String> category,
+                   String registrationNo, String taxIdNo, String taxOffice, String title, long point){
+        this.id = id;
+        this.address = address;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.type = type;
+        this.category = category;
+        this.registrationNo = registrationNo;
+        this.taxIdNo = taxIdNo;
+        this.taxOffice = taxOffice;
+        this.title = title;
+        this.point = point;
+    }
+
     public List<String> getCategory() {
         return category;
     }
@@ -52,11 +85,11 @@ public class Company extends User {
         this.category = category;
     }
 
-    public int getPoint() {
+    public long getPoint() {
         return point;
     }
 
-    public void setPoint(int point) {
+    public void setPoint(long point) {
         this.point = point;
     }
 

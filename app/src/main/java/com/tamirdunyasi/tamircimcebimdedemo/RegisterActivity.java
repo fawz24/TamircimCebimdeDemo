@@ -27,14 +27,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.intellij.lang.annotations.RegExp;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.RegEx;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements MultiSelectionSpinner.OnMultipleItemsSelectedListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth dbAuth = FirebaseAuth.getInstance();
@@ -44,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
     private Menu mBottomMenu;
     private ViewPager mViewPager;
+    private MultiSelectionSpinner mMultiSelectionSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,23 @@ public class RegisterActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(pageChangeListener);
 
         currentUser = null;
+    }
+
+    public MultiSelectionSpinner getmMultiSelectionSpinner() {
+        return mMultiSelectionSpinner;
+    }
+
+    public void setmMultiSelectionSpinner(MultiSelectionSpinner mMultiSelectionSpinner) {
+        this.mMultiSelectionSpinner = mMultiSelectionSpinner;
+    }
+
+    @Override
+    public void selectedIndices(List<Integer> indices) {
+
+    }
+
+    @Override
+    public void selectedStrings(List<String> strings) {
     }
 
     private void setUpViewPager(@NotNull ViewPager viewPager) {
@@ -106,29 +126,51 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
-    public void registerPersonListener(View v){
-        EditText nameEdit = findViewById(R.id.registerName);
-        EditText surnameEdit = findViewById(R.id.registerSurname);
-        EditText emailEdit = findViewById(R.id.registerEmail);
-        EditText passwordEdit = findViewById(R.id.registerPassword);
-        EditText repeatPasswordEdit = findViewById(R.id.registerPasswordRepeat);
-        EditText phoneEdit = findViewById(R.id.registerPhone);
-        EditText addressEdit = findViewById(R.id.registerAddress);
+    public void registerListener(View v){
+        String address = "";
+        String email = "";
+        String name = "";
+        String password = "";
+        String repeatPassword = "";
+        String phone = "";
 
-        String name = nameEdit.getText().toString();
-        String surname = surnameEdit.getText().toString();
-        String email = emailEdit.getText().toString();
-        String password = passwordEdit.getText().toString();
-        String repeatPassword = repeatPasswordEdit.getText().toString();
-        String phone = phoneEdit.getText().toString();
-        String address = addressEdit.getText().toString();
+        EditText addressEdit = findViewById(R.id.registerAddress);
+        EditText addressCompanyEdit = findViewById(R.id.registerAddressCompany);
+        EditText emailEdit = findViewById(R.id.registerEmail);
+        EditText emailCompanyEdit = findViewById(R.id.registerEmailCompany);
+        EditText nameEdit = findViewById(R.id.registerName);
+        EditText nameCompanyEdit = findViewById(R.id.registerNameCompany);
+        EditText passwordEdit = findViewById(R.id.registerPassword);
+        EditText passwordCompanyEdit = findViewById(R.id.registerPasswordCompany);
+        EditText repeatPasswordEdit = findViewById(R.id.registerPasswordRepeat);
+        EditText repeatPasswordCompanyEdit = findViewById(R.id.registerPasswordRepeatCompany);
+        EditText phoneEdit = findViewById(R.id.registerPhone);
+        EditText phoneCompanyEdit = findViewById(R.id.registerPhoneCompany);
+
+        switch (v.getId()){
+            case R.id.registerButtonPersonal:
+                address = addressEdit.getText().toString();
+                email = emailEdit.getText().toString();
+                name = nameEdit.getText().toString();
+                password = passwordEdit.getText().toString();
+                repeatPassword = repeatPasswordEdit.getText().toString();
+                phone = phoneEdit.getText().toString();
+                break;
+            case R.id.registerButtonCompany:
+                address = addressCompanyEdit.getText().toString();
+                email = emailCompanyEdit.getText().toString();
+                name = nameCompanyEdit.getText().toString();
+                password = passwordCompanyEdit.getText().toString();
+                repeatPassword = repeatPasswordCompanyEdit.getText().toString();
+                phone = phoneCompanyEdit.getText().toString();
+                break;
+        }
 
         Matcher matcher = Pattern.compile("^[a-zA-Z0-1]+(\\.[a-zA-Z0-1]+)?@[a-zA-Z0-1]+\\.[a-zA-Z0-1]+$").matcher(email);
 
-        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() ||
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() ||
                 repeatPassword.isEmpty()){
-
-            Toast.makeText(RegisterActivity.this, "Lütfen Tüm Alanları Eksiksiz Doldurun!",
+            Toast.makeText(RegisterActivity.this, "Lütfen Tüm Zorunlu Alanları Eksiksiz Doldurun! 111",
                     Toast.LENGTH_LONG).show();
             return;
         }
@@ -137,7 +179,7 @@ public class RegisterActivity extends AppCompatActivity {
             repeatPassword = Helpers.hashPassword(repeatPassword);
 
             if (!matcher.find()){
-                Toast.makeText(RegisterActivity.this, "Lütfen Doğru Bir Email Adresi Giriniz!",
+                Toast.makeText(RegisterActivity.this, "Lütfen Doğru Bir Email Adresi Giriniz! 222",
                         Toast.LENGTH_LONG).show();
                 return;
             }
@@ -149,8 +191,45 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-        Client user = new Client(address, email, name, password, phone, surname, "cl");
-        createAccount(this, user, "cl");
+        User user = null;
+
+        switch (v.getId()){
+            case R.id.registerButtonPersonal:
+                EditText surnameEdit = findViewById(R.id.registerSurname);
+                String surname = surnameEdit.getText().toString();
+                if (surname.isEmpty()){
+                    Toast.makeText(RegisterActivity.this, "Lütfen Tüm Zorunlu Alanları Eksiksiz Doldurun! 333",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                user = new Client(address, email, name, password, phone, surname, "cl");
+                break;
+            case R.id.registerButtonCompany:
+                EditText titleEdit = findViewById(R.id.registerTitleCompany);
+                EditText registrationNoEdit = findViewById(R.id.registerSicilNoCompany);
+                EditText vergiDairesiEdit = findViewById(R.id.registerVergiDairesiCompany);
+                EditText vergiDairesiNoEdit = findViewById(R.id.registerVergiDairesiNoCompany);
+
+                String title = titleEdit.getText().toString();
+                String registrationNo = registrationNoEdit.getText().toString();
+                String taxOffice = vergiDairesiEdit.getText().toString();
+                String taxIdNo = vergiDairesiNoEdit.getText().toString();
+
+                if (title.isEmpty() || registrationNo.isEmpty() || taxIdNo.isEmpty() || taxOffice.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Lütfen Tüm Zorunlu Alanları Eksiksiz Doldurun! 444",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                List<String> categories = mMultiSelectionSpinner.getSelectedStrings();
+                if (categories == null || categories.size() <= 0){
+                    Toast.makeText(this, "Lütfen en az bir kategori seçınız!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                user = new Company(address, email, name, password, phone, "co", categories, registrationNo, taxIdNo, taxOffice, title);
+                break;
+        }
+        createAccount(user, user.getType());
     }
 
     public void setCurrentUser(FirebaseUser currentUser) {
@@ -161,7 +240,8 @@ public class RegisterActivity extends AppCompatActivity {
         return currentUser;
     }
 
-    private void createAccount(final RegisterActivity context, final User user, final String type){
+    private void createAccount(final User user, final String type){
+        final RegisterActivity context = this;
         dbAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -188,22 +268,23 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
-//                                      Create a new client
-                                    Map<String, Object> clientDoc = new HashMap<>();
                                     if (type.equals("cl")){
+//                                      Create a new client
+                                        Map<String, Object> clientDoc = new HashMap<>();
                                         clientDoc.put("surname", ((Client)user).getSurname());
+                                        clientDoc.put("name", user.getName());
 
                                         db.collection("client").document(context.getCurrentUser().getUid())
                                                 .set(clientDoc).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-
+                                                Helpers.goToHome(RegisterActivity.this, RegisterActivity.this.getCurrentUser());
                                             }
                                         })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-
+                                                        Toast.makeText(context, "Kayıt esnasında bir hata oluştu!", Toast.LENGTH_LONG).show();
                                                         db.collection("users").document(loggedUser.getUid())
                                                                 .delete()
                                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -230,24 +311,25 @@ public class RegisterActivity extends AppCompatActivity {
                                     else if (type.equals("co")){
 //                                        Create a new company document
                                         Map<String, Object> companyDoc = new HashMap<>();
-//                                        companyDoc.put("category", ((Company)user).getCategory());
+                                        companyDoc.put("category", ((Company)user).getCategory());
                                         companyDoc.put("point", 0);
                                         companyDoc.put("registrationno", ((Company)user).getRegistrationNo());
                                         companyDoc.put("taxoffice", ((Company)user).getTaxOffice());
                                         companyDoc.put("taxidno", ((Company)user).getTaxIdNo());
                                         companyDoc.put("title", ((Company)user).getTitle());
+                                        companyDoc.put("name", user.getName());
 
                                         db.collection("company").document(context.getCurrentUser().getUid())
                                                 .set(companyDoc).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-
+                                                Helpers.goToHome(RegisterActivity.this, RegisterActivity.this.getCurrentUser());
                                             }
                                         })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-
+                                                        Toast.makeText(context, "Kayıt esnasında bir hata oluştu!", Toast.LENGTH_LONG).show();
                                                         db.collection("users").document(loggedUser.getUid())
                                                                 .delete()
                                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -276,6 +358,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(context, "Kayıt esnasında bir hata oluştu!", Toast.LENGTH_LONG).show();
                                             loggedUser.delete()
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
@@ -289,10 +372,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     });
 
                             Helpers.goToHome(RegisterActivity.this, RegisterActivity.this.getCurrentUser());
-//                            updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Lütfen Tüm Alanları Eksiksiz Doldurun!",
                                     Toast.LENGTH_LONG).show();
                         }

@@ -67,6 +67,18 @@ public class CompanyRegisterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_company_register, container, false);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        String[] categoriesList = {"Elektrik", "Su Tesisat", "Boya", "Araba"};
+        RegisterActivity context = (RegisterActivity)getContext();
+        MultiSelectionSpinner multiSelectionSpinner = (MultiSelectionSpinner)context.findViewById(R.id.categories);
+        multiSelectionSpinner.setItems(categoriesList);
+        multiSelectionSpinner.setListener(context);
+        context.setmMultiSelectionSpinner(multiSelectionSpinner);
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

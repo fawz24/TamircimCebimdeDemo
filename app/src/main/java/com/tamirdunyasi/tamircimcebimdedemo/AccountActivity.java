@@ -19,11 +19,11 @@ public class AccountActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth dbAuth = FirebaseAuth.getInstance();
-    private FirebaseUser currentUser;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    private String currentUserEmail;
-    private String currentUserDisplayName;
-    private String currentUserId;
+//    private String currentUserEmail;
+//    private String currentUserDisplayName;
+//    private String currentUserId;
 
     private LinearLayout mContainer;
     private BottomNavigationView mBottomNavigationView;
@@ -35,9 +35,9 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         Bundle bundle = getIntent().getExtras();
-        currentUserId = bundle.getString("userId");
-        currentUserEmail = bundle.getString("userEmail");
-        currentUserDisplayName = bundle.getString("userName");
+//        currentUserId = bundle.getString("userId");
+//        currentUserEmail = bundle.getString("userEmail");
+//        currentUserDisplayName = bundle.getString("userName");
 
         mBottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation_bottom);
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
@@ -45,7 +45,7 @@ public class AccountActivity extends AppCompatActivity {
         mMenu = mBottomNavigationView.getMenu();
         mMenu.getItem(3).setChecked(true);
 
-        currentUser = dbAuth.getCurrentUser();
+//        currentUser = dbAuth.getCurrentUser();
 
 //        Toast.makeText(this, "User Id: " + currentUserId, Toast.LENGTH_LONG).show();
 //
@@ -77,11 +77,11 @@ public class AccountActivity extends AppCompatActivity {
                     break;
             }
             if (intent != null){
-                Bundle bundle = new Bundle();
-                bundle.putString("userEmail", currentUserEmail);
-                bundle.putString("userName", currentUserDisplayName);
-                bundle.putString("userId", currentUserId);
-                intent.putExtras(bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("userEmail", currentUserEmail);
+//                bundle.putString("userName", currentUserDisplayName);
+//                bundle.putString("userId", currentUserId);
+//                intent.putExtras(bundle);
                 startActivity(intent);
             }
             return true;
@@ -89,6 +89,6 @@ public class AccountActivity extends AppCompatActivity {
     };
 
     public void logoutListener(View v){
-        Helpers.signOut(AccountActivity.this, dbAuth);
+        Helpers.signOut(this, dbAuth);
     }
 }

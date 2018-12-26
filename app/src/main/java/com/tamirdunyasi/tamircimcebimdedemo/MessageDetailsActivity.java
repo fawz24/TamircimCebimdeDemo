@@ -80,6 +80,13 @@ public class MessageDetailsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        getParent().recreate();
+    }
+
     public void sendMessageListener(View v){
         saveMessage(mMessageId);
     }

@@ -86,12 +86,16 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
                         if (task.isSuccessful()){
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()){
-                                mPost = new Post(document.getId(), document.get("category").toString(), document.get("clientid").toString(),
-                                        document.get("clientname").toString(), document.get("companyid").toString(), document.get("companyname").toString(),
-                                        document.get("content").toString(), (Date)document.get("date"), (long)document.get("point"),
-                                        document.get("state").toString(), document.get("title").toString());
-
-                                Toast.makeText(context, "Existing post: " + mPost.getId(), Toast.LENGTH_LONG).show();
+                                long point;
+                                try {
+                                    point = document.getLong("point");
+                                } catch (Exception e){
+                                    point = 0;
+                                }
+                                mPost = new Post(document.getId(), document.getString("category"), document.getString("clientid"),
+                                        document.getString("clientname"), document.getString("companyid"), document.getString("companyname"),
+                                        document.getString("content"), document.getDate("date"), point,
+                                        document.getString("state"), document.getString("title"));
 
                                 TextView state = context.findViewById(R.id.status);
                                 EditText title = context.findViewById(R.id.postTitle);
@@ -112,11 +116,10 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
 
                                 switch (mPost.getState()){
                                     case "Açık":
-                                        Toast.makeText(context, "durum: Açık", Toast.LENGTH_LONG).show();
                                         state.setText("Açık");
+                                        category.setSelection(Helpers.getSelectedCategory(context, mPost.getCategory()));
                                         break;
                                     case "Beklemede":
-                                        Toast.makeText(context, "durum: Beklemede", Toast.LENGTH_LONG).show();
                                         state.setText("Beklemede");
                                         companyName.setText(mPost.getCompanyName());
 //                                        companyName.setEnabled(false);
@@ -130,7 +133,6 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
                                         voteGroup.setVisibility(View.VISIBLE);
                                         break;
                                     case "Kapalı":
-                                        Toast.makeText(context, "durum: Kapalı", Toast.LENGTH_LONG).show();
                                         state.setText("Kapalı");
 //                                        companyName.setEnabled(false);
                                         companyName.setText(mPost.getCompanyName());
@@ -159,16 +161,21 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
                                                         context.getApplicationContext().getTheme()));
                                             } else {
                                                 pointStar1.setImageResource(R.drawable.ic_star_second_24dp);
-//                                                pointStar1.setBackground(getResources().getDrawable(R.drawable.ic_star_second_24dp));
-//                                                pointStar1.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_second_24dp));
                                             }
-                                            pointStar1.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_second_24dp));
+//                                            pointStar1.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_second_24dp));
                                             if (mPost.getPoint() == 1){
                                                 radioButtonNotSure.setChecked(true);
                                             } if (mPost.getPoint() == 2){
                                                 radioButtonLike.setChecked(true);
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                                                    pointStar2.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_second_24dp,
+                                                            context.getApplicationContext().getTheme()));
+                                                }
+                                                else {
+                                                    pointStar2.setImageResource(R.drawable.ic_star_second_24dp);
+                                                }
 //                                                pointStar2.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_second_24dp));
-                                                pointStar2.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_second_24dp));
+//                                                pointStar2.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_second_24dp));
                                             }
                                         }
                                         break;
@@ -179,7 +186,6 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
                 });
             }
         } catch (Exception e){
-            Toast.makeText(this, "New post", Toast.LENGTH_LONG).show();
         }
 
         mCategory = findViewById(R.id.category);
@@ -200,9 +206,9 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
         Button saveButton = findViewById(R.id.saveButton);
         final String company = ((EditText)findViewById(R.id.companyName)).getText().toString();
 //        RadioGroup vote = findViewById(R.id.voteGroup);
-//        RadioButton dislike = findViewById(R.id.dislike);
-//        RadioButton notSure = findViewById(R.id.notSure);
-//        RadioButton like = findViewById(R.id.like);
+        RadioButton dislike = findViewById(R.id.dislike);
+        RadioButton notSure = findViewById(R.id.notSure);
+        RadioButton like = findViewById(R.id.like);
 
         saveButton.setEnabled(false);
 
@@ -217,19 +223,20 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
             return;
         }
         if (status.equals("Beklemede")){
-//            if (dislike.isChecked()){
-//                mSelectedVote = 0;
-//            } else if (notSure.isChecked()){
-//                mSelectedVote = 1;
-//            } else if (like.isChecked()){
-//                mSelectedVote = 2;
-//            }
-            if (mSelectedVote < 0){
+            if (dislike.isChecked()){
+                mSelectedVote = 0;
+            } else if (notSure.isChecked()){
+                mSelectedVote = 1;
+            } else if (like.isChecked()){
+                mSelectedVote = 2;
+            } else if (mSelectedVote < 0 || mSelectedVote > 2){
+                mSelectedVote = -1;
                 saveButton.setEnabled(true);
                 return;
             }
 
             value.put("point", mSelectedVote);
+            value.put("state", "Kapalı");
             mPost.setPoint(mSelectedVote);
             prevStatus = "Beklemede";
         } else if (status.equals("Açık") || status.equals("Yeni")){
@@ -266,16 +273,20 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
                 db.collection("users").whereEqualTo("name", company).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (final DocumentSnapshot document: queryDocumentSnapshots){
-                            db.collection("company").document(document.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    value.put("state", "Beklemede");
-                                    value.put("companyid", document.getId());
-                                    value.put("companyname", company);
-                                    savePost(value, previousStatus);
-                                }
-                            });
+                        if (queryDocumentSnapshots != null && (!queryDocumentSnapshots.isEmpty() || queryDocumentSnapshots.size() > 0)){
+                            for (final DocumentSnapshot document: queryDocumentSnapshots){
+                                db.collection("company").document(document.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        value.put("state", "Beklemede");
+                                        value.put("companyid", document.getId());
+                                        value.put("companyname", company);
+                                        savePost(value, previousStatus);
+                                    }
+                                });
+                            }
+                        }else {
+                            Toast.makeText(getBaseContext(), "Şirket bulunamadı!", Toast.LENGTH_LONG).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -355,12 +366,12 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getBaseContext(), "Kayedilemedi!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Kaydedilemedi!", Toast.LENGTH_LONG).show();
                 }
             });
         }
         else {
-            db.collection("request").document(mPost.id).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+            db.collection("request").document(mPost.id).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     closePost();
@@ -368,7 +379,7 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getBaseContext(), "Kayedilemedi!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Kaydedilemedi!", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -382,6 +393,7 @@ public class PostDetailsActivity extends AppCompatActivity implements AdapterVie
 //            return;
 //        }
 //        recreate();
+        getParent().recreate();
         finish();
     }
 
